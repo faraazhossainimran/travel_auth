@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import NavBar from "../Shared/NavBar/NavBar";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const Login = () => {
+  const {signIn} = useContext(AuthContext)
+  const handleLogin = (e) => {
+    const form = new FormData(e.currentTarget);
+    const email = form.get('email')
+    console.log(email);
+  }
   return (
     <div>
       <NavBar></NavBar>
@@ -37,11 +45,11 @@ const Login = () => {
                   <div className="flex ">
                     <label className="label grow ">
                       <div>
-                        <input
+                        {/* <input
                           type="checkbox"
                           checked=""
                           className="checkbox"
-                        />
+                        /> */}
                         <a href="#" className="label-text-alt link link-hover">
                           Remember me
                         </a>
@@ -55,7 +63,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="form-control mt-6">
-                  <button className="btn bg-[#F9A51A] rounded-sm">Login</button>
+                  <button onClick={handleLogin} className="btn bg-[#F9A51A] rounded-sm">Login</button>
                 </div>
               </form>
               <p className="text-center pb-8">

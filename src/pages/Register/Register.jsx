@@ -1,8 +1,24 @@
 import { Link } from "react-router-dom"
 import NavBar from "../Shared/NavBar/NavBar"
+import { useContext } from "react"
+import { AuthContext } from "../../providers/AuthProviders"
 
 
 const Register = () => {
+    const {createAccount, user} = useContext(AuthContext)
+    const handleRegister = (e) => {
+      e.preventDefault()
+      const form = new FormData(e.currentTarget);
+      const email = form.get('email')
+      const password = form.get('password')
+      createAccount(email, password)
+      .then(result => {
+       console.log( result.user);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
     return (
         <div>
                 <div>
@@ -11,7 +27,8 @@ const Register = () => {
         <div className="hero">
           <div className="hero-content w-[500px] p-4 flex-col lg:flex-row-reverse">
             <div className="card flex-shrink-0 w-full border rounded-sm">
-              <form className="card-body">
+              <form className="card-body" onSubmit={handleRegister}>
+              {user && <p>you are logged in</p>}
                 <h1 className="text-xl font-bold">Create an account</h1>
                 <div className="form-control">
                   <label className="label">
@@ -77,7 +94,6 @@ const Register = () => {
                       <div>
                         <input
                           type="checkbox"
-                          checked=""
                           className="checkbox"
                         />
                         <a href="#" className="label-text-alt link link-hover">
@@ -94,7 +110,7 @@ const Register = () => {
                 </div>
                 
                 <div className="form-control mt-6">
-                  <button className="btn bg-[#F9A51A] rounded-sm">Login</button>
+                  <button type="submit" className="btn bg-[#F9A51A] rounded-sm">Resigter</button>
                 </div>
               </form>
               <p className="text-center pb-8">
@@ -111,6 +127,7 @@ const Register = () => {
         </div>
       </div>
     </div>
+  
         </div>
     )
 }
